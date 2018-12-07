@@ -1,14 +1,14 @@
 import pygame
 from pygame.locals import *
-from point2 import Point2
+from point2d import Point2D
 
 class Ezgame:
     def __init__(self, width=100, height=100):
         self.width  = width
         self.height = height
         self.size   = (self.width, self.height)
-        self.origin = Point2(self.width/2, self.height/2)
-        # self.origin = Point2(300, self.height-150)
+        self.origin = Point2D(self.width/2, self.height/2)
+        # self.origin = Point2D(300, self.height-150)
 
         self.screen = None
 
@@ -32,12 +32,12 @@ class Ezgame:
         self.width  = w
         self.height = h
         self.size   = (self.width, self.height)
-        self.origin = Point2(self.width/2, self.height/2)
+        self.origin = Point2D(self.width/2, self.height/2)
 
 
     def transform(self, p):
         # transforms world coordinates to screen coordinates
-        return Point2(p.x+self.origin.x, self.origin.y - p.y)
+        return Point2D(p.x+self.origin.x, self.origin.y - p.y)
 
     def init(self, loopFunction=None):
         pygame.init()
@@ -51,13 +51,13 @@ class Ezgame:
             pygame.draw.line(
                 self.screen,
                 Color(color),
-                self.transform(ini).rect(asInt=True),
-                self.transform(end).rect(asInt=True),
+                self.transform(ini).ints(),
+                self.transform(end).ints(),
                 width)
 
     def lines(self, points, color='black', width=1):
         if self.gui:
-            transformed = [self.transform(p).rect(asInt=True) for p in points]
+            transformed = [self.transform(p).ints() for p in points]
             pygame.draw.lines(
                 self.screen,
                 Color(color),
@@ -70,16 +70,16 @@ class Ezgame:
             pygame.draw.circle(
                 self.screen, 
                 Color(color), 
-                self.transform(pos).rect(asInt=True),
+                self.transform(pos).ints(),
                 size
             )
 
     def text(self, txt, pos, onScreen=False):
         if self.gui:
             label = self.font.render(txt, 1, Color(self.textColor))
-            pos_tuple = self.transform(pos).rect(asInt=True)
+            pos_tuple = self.transform(pos).ints()
             if onScreen:
-                pos_tuple = pos.rect(asInt=True)
+                pos_tuple = pos.ints()
             self.screen.blit(label, pos_tuple)
 
     def drawScreen(self):
