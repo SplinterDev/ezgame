@@ -97,6 +97,7 @@ class Application:
         self.ez.run()
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+def run_example():
     app = Application()
     app.run()
