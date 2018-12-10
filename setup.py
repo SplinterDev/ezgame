@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ezgame",
-    version="0.0.1c",
+    version="0.0.1",
     author="Fabricio J.C. Montenegro",
     author_email="fabriciojcmontenegro@gmail.com",
     description="Small layer over pygame to make its usage more transparent.",

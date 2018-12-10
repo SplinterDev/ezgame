@@ -35,9 +35,13 @@ class Ezgame:
         self.origin = Point2D(self.width/2, self.height/2)
 
 
-    def transform(self, p):
+    def worldToScreen(self, p):
         # transforms world coordinates to screen coordinates
         return Point2D(p.x+self.origin.x, self.origin.y - p.y)
+
+    def screenToWorld(self, p):
+        # transforms screen coordinates to world coordinates
+        return Point2D(p.x-self.origin.x, self.origin.y - p.y)
 
     def init(self, loopFunction=None):
         pygame.init()
@@ -51,13 +55,13 @@ class Ezgame:
             pygame.draw.line(
                 self.screen,
                 Color(color),
-                self.transform(ini).ints(),
-                self.transform(end).ints(),
+                self.worldToScreen(ini).ints(),
+                self.worldToScreen(end).ints(),
                 width)
 
     def lines(self, points, color='black', width=1):
         if self.gui:
-            transformed = [self.transform(p).ints() for p in points]
+            transformed = [self.worldToScreen(p).ints() for p in points]
             pygame.draw.lines(
                 self.screen,
                 Color(color),
@@ -70,17 +74,20 @@ class Ezgame:
             pygame.draw.circle(
                 self.screen, 
                 Color(color), 
-                self.transform(pos).ints(),
+                self.worldToScreen(pos).ints(),
                 size
             )
 
     def text(self, txt, pos, onScreen=False):
         if self.gui:
             label = self.font.render(txt, 1, Color(self.textColor))
-            pos_tuple = self.transform(pos).ints()
+            pos_tuple = self.worldToScreen(pos).ints()
             if onScreen:
                 pos_tuple = pos.ints()
             self.screen.blit(label, pos_tuple)
+
+    def getMousePos(self):
+        return self.screenToWorld(Point2D(pygame.mouse.get_pos()))
 
     def drawScreen(self):
         if self.gui:
@@ -105,6 +112,8 @@ class Ezgame:
 
     def setQuit(self):
         self.keepRunning = False
+        pygame.display.quit()
+        pygame.quit()
 
     def press(self, key, func):
         self.keys[key] = func
