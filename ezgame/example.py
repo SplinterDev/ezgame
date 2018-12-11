@@ -42,12 +42,13 @@ APPW = 1200
 APPH = 800
 
 LEVELS = 9
+FPS = 32
 
 class Application:
     def __init__(self):
         self.ez = Ezgame(APPW, APPH)
         self.ez.origin = Point2D(APPW/2.0, APPH*0.90)
-        # self.ez.fps = FPS
+        self.ez.fps = FPS
         self.ez.init(self.loop)
 
         self.size = 1
@@ -55,7 +56,6 @@ class Application:
         p.a = math.radians(90)
         self.tree = Tree(p, self.size, LEVELS)
         self.angle = math.radians(1)
-        # self.tree.create_children(LEVELS, self.angle)
 
     def drawNode(self, node):
         if node.level == 1:
@@ -78,8 +78,6 @@ class Application:
 
 
     def loop(self):
-        # self.ez.line(Point2D(), self.tree.p, "burlywood3", 48)
-        # print(math.degrees(self.angle*2))
         self.tree.create_children(LEVELS, self.angle)
         self.drawNode(self.tree)
 
@@ -92,7 +90,6 @@ class Application:
         self.ez.run()
 
 
-# if __name__ == '__main__':
 def run_example():
     app = Application()
     app.run()
