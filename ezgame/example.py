@@ -1,7 +1,6 @@
 from ezgame import Ezgame
 from point2d import Point2D
 import math
-from random import random
 
 ANGLE = 45
 NEXT_SIZE = 0.9
@@ -60,11 +59,7 @@ class Application:
 
     def drawNode(self, node):
         if node.level == 1:
-            if random() < 0.25:
-                self.drawChildren(node, "deeppink2")
-            else:
-                self.drawChildren(node, "chartreuse2")
-
+            self.drawChildren(node, "chartreuse2")
         elif node.level == 2:
                 self.drawChildren(node, "chartreuse3")
         elif node.level == 3:
